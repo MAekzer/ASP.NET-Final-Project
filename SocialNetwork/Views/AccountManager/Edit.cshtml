@@ -1,0 +1,47 @@
+﻿@model SocialNetwork.ViewModels.Account.UserEditViewModel
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="red-container">
+    <form method="post" asp-controller="AccountManager" asp-action="UpdateProfile" class="red-form">
+        <div asp-validation-summary="ModelOnly"></div>
+        <h1 class="red-h">Редактирование профиля</h1>
+        <div class="red-in-div">
+            <input type="text" asp-for="FirstName" class="red-in" value="@Model.FirstName" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+        <div class="red-in-div">
+            <input type="text" asp-for="LastName" class="red-in" value="@Model.LastName" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+        <div class="red-in-div">
+            <input type="text" asp-for="MiddleName" class="red-in" value="@Model.MiddleName" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+        <div class="red-in-div">
+            <input type="date" asp-for="BirthDate" class="red-date" value="@Model.BirthDate.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+        <div class="red-in-div">
+            <input type="email" asp-for="Email" class="red-in" value="@Model.Email" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+        <div class="red-in-div">
+            <input type="text" asp-for="Status" class="red-in" value="@Model.Status" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+        <div class="red-in-div">
+            <input type="text" asp-for="About" class="red-in" value="@Model.About" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+        <div class="red-in-div">
+            <input type="text" asp-for="Image" class="red-in" value="@Model.Image" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
+        </div>
+        <button type="submit" class="red-save-btn">Сохранить изменения</button>
+    </form>
+</div>

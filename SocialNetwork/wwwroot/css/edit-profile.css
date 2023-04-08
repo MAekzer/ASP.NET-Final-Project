@@ -1,0 +1,77 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+.red-container {
+    background-color: #eeeeee;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 1px 0;
+}
+
+.red-h {
+    text-align: center;
+}
+
+.red-in {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    min-height: 30px;
+    border-radius: 3px;
+    font-size: 1rem;
+    border: 2px groove #cccccc;
+}
+
+.red-date {
+    display: block;
+    min-width: 30%;
+    width: 300px;
+    max-width: 50%;
+    min-height: 30px;
+    margin: 0 0 0 5%;
+    border-radius: 3px;
+    font-size: 1.05rem;
+    border: 2px groove #cccccc;
+}
+
+    .red-date:hover {
+        cursor: text;
+    }
+
+.red-id {
+    display: none;
+}
+
+.red-form {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    margin: 30px auto;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 5px;
+}
+
+.red-save-btn {
+    width: 90%;
+    margin: 10px auto;
+    min-height: 30px;
+    height: 25%;
+    border-radius: 3px;
+    font-size: 1.1rem;
+    background-color: MediumSeaGreen;
+    color: white;
+    border: none;
+}
+
+    .red-save-btn:hover {
+        cursor: pointer;
+    }
+
+    .red-save-btn:active {
+        background-color: SeaGreen;
+    }

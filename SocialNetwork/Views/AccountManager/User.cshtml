@@ -1,0 +1,36 @@
+﻿@using SocialNetwork.Extentions
+@model ViewModels.Account.UserViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1 class="fullname">@Model.User.GetFullName()</h1>
+
+<div class="profile-main">
+
+    <figure class="profile-figure">
+        <img class="profile-img" src="@Model.User.Image" />
+        <figcaption>
+            <a class="edit-btn" asp-action="EditProfile" asp-controller="AccountManager">
+                <span>Редактировать профиль</span>
+            </a>
+        </figcaption>
+    </figure>
+
+    <div class="profile-info">
+
+        <div class="about">
+            <p><span>Статус: </span>@Model.User.Status</p>
+            <p><span>Дата рождения: </span>@Model.User.BirthDate.ToLongDateString()</p>
+            <p><span>О себе: </span>@Model.User.About</p>
+            <p><span>Email:  </span>@Model.User.Email</p>
+        </div>
+
+        <div class="friend-list">
+            <p>Список друзей</p>
+            <div class="friend-container">
+            </div>
+        </div>
+
+    </div>
+</div>
