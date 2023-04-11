@@ -4,6 +4,7 @@ using System.Text;
 using SocialNetwork.Models.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SocialNetwork.Configuration;
 
 namespace SocialNetwork.Data
 {
@@ -12,7 +13,19 @@ namespace SocialNetwork.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>(b =>
+            {
+                b.HasIndex(u => u.NormalizedEmail).IsUnique();
+            });
+
+            modelBuilder.ApplyConfiguration(new FriendConfiguration());
         }
     }
 }

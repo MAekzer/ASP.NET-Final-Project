@@ -6,6 +6,7 @@ using SocialNetwork.Data.Repository;
 using SocialNetwork.Extentions;
 using SocialNetwork.Models.Users;
 using System.Reflection;
+using SocialNetwork.Controllers.Account;
 
 namespace SocialNetwork
 {
@@ -30,6 +31,7 @@ namespace SocialNetwork
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionstring));
             builder.Services.AddUnitOfWork();
             builder.Services.AddCustomRepository<Message, MessageRepository>();
+            builder.Services.AddCustomRepository<Friend, FriendRepository>();
 
             builder.Services.AddRazorPages();
 

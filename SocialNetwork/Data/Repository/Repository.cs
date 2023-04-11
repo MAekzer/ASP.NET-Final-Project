@@ -9,35 +9,43 @@ namespace SocialNetwork.Data.Repository
     public class Repository<T> : IRepository<T> where T : class
     {
         private DbContext _db;
+        public DbSet<T> Set { get; private set; }
 
         public Repository(ApplicationDbContext db)
         {
             _db = db;
+            var set = _db.Set<T>();
+            set.Load();
+
+            Set = set;
         }
 
-        public void Create(T item)
+        public async Task Create(T item)
         {
-            throw new NotImplementedException();
+            await Set.AddAsync(item);
+            await _db.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(T item)
         {
-            throw new NotImplementedException();
+            Set.Remove(item);
+            await _db.SaveChangesAsync();
         }
 
-        public T Get(int id)
+        public async Task<T> Get(int id)
         {
-            throw new NotImplementedException();
+            return await Set.FindAsync(id);
         }
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return Set;
         }
 
-        public void Update(T item)
+        public async Task Update(T item)
         {
-            throw new NotImplementedException();
+            Set.Update(item);
+            await _db.SaveChangesAsync();
         }
     }
 }

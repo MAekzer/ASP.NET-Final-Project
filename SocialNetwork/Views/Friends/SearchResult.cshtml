@@ -1,0 +1,48 @@
+﻿@using Extentions
+@model ViewModels.Account.SearchViewModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="search-container">
+    @if (Model is null || Model.Result is null || Model.Result.Count == 0)
+    {
+        <h1 class="not-found">Никого не нашлось</h1>
+        <p class="not-found"> Попробуйте изменить параметры поиска и повторить попытку</p>
+    }
+    else
+    {
+        <ul class="search-result">
+        @foreach (var user in Model.Result)
+        {
+                <li>
+                    <figure class="search-img-container">
+                        <img class="search-profile-img" src="@user.Image">
+                        <figcaption>
+                            @if (Model.Friends.Contains(user))
+                            {
+                                <button class="add-friend-btn" type="button" onclick="location.href='@Url.Action("DeleteFriend", "Friends", user.Id)'">
+                                    Удалить из друзей
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="add-friend-btn" type="button" onclick="location.href='@Url.Action("DeleteFriend", "Friends", user.Id)'">
+                                    Добавить в друзья
+                                </button>
+                            }
+                        </figcaption>
+                    </figure>
+                    <div class="search-info-container">
+                        <p class="search-name">@user.GetFullName()</p>
+                        <p><span>Дата рождения:</span> <span class="search-info">@user.BirthDate.ToLongDateString()</span></p>
+                        <p><span>Возраст:</span> <span class="search-info">@user.GetStrAge()</span></p>
+                        <p><span>Статус:</span> <span class="search-info"></span>@user.Status</p>
+                    </div>
+                </li>
+        }
+        </ul>
+    }
+</div>
+
+

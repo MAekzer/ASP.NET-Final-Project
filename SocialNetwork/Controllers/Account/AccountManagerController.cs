@@ -7,6 +7,7 @@ using SocialNetwork.Models.Users;
 using SocialNetwork.ViewModels.Account;
 using SocialNetwork.Extentions;
 using System.ComponentModel.DataAnnotations;
+using SocialNetwork.Data.Repository;
 
 namespace SocialNetwork.Controllers.Account
 {
@@ -19,11 +20,12 @@ namespace SocialNetwork.Controllers.Account
 
         private readonly IUnitOfWork _unitOfWork;
 
-        public AccountManagerController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper)
+        public AccountManagerController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -96,7 +98,10 @@ namespace SocialNetwork.Controllers.Account
             var user = User;
             var result = await _userManager.GetUserAsync(user);
 
+            var repo = _unitOfWork.GetRepository<Friend>() as FriendRepository;
+
             var model = new UserViewModel(result);
+            model.Friends = await repo.GetFriendsByUser(result);
 
             return View("User", model);
         }

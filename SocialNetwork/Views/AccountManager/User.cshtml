@@ -29,8 +29,28 @@
         <div class="friend-list">
             <p>Список друзей</p>
             <div class="friend-container">
+                @if (Model.Friends is null || Model.Friends.Count == 0)
+                {
+                    <div class="sad-face">Похоже, у вас пока нет друзей :(</div>
+                }
+                else
+                {
+                    foreach (var friend in Model.Friends)
+                    {
+                        <figure class="friend-image-container">
+                            <img src="@Model.User.Image"/>
+                            <figcaption>
+                                <button type="button" class="delete-friend-btn" onclick="location.href='@Url.Action("DeleteFriend", "Friends", friend.Id)'">
+                                    Удалить
+                                </button>
+                            </figcaption>
+                        </figure>
+                    }
+                }
             </div>
-        </div>
 
+        </div>
+        <a class="search-prompt" href="UserSearch">
+            <span>Найти больше друзей</span>
+        </a>
     </div>
-</div>

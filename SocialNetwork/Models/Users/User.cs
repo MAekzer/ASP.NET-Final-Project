@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SocialNetwork.Extentions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,30 @@ namespace SocialNetwork.Models.Users
             Image = "https://via.placeholder.com/500";
             Status = "Ура! Я в соцсети!";
             About = "Информация обо мне.";
+        }
+
+        public static Dictionary<string, string> GetNameFromFullName(string fullname)
+        {
+            var map = new Dictionary<string, string>();
+            string[] parts = fullname.Split(' ');
+
+            map["firstname"] = parts[0];
+
+            if (parts.Length == 2)
+            {
+                map["lastname"] = parts[1];
+            }
+            else if (parts.Length == 3)
+            {
+                map["middlename"] = parts[1];
+                map["lastname"] = parts[2];
+            }
+            else
+            {
+                map["firstname"] = fullname;
+            }
+
+            return map;
         }
     }
 }

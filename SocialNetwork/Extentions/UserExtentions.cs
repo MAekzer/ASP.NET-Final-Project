@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Update.Internal;
 using SocialNetwork.Models.Users;
 using SocialNetwork.ViewModels.Account;
+using System.Runtime.CompilerServices;
 
 namespace SocialNetwork.Extentions
 {
@@ -23,6 +24,33 @@ namespace SocialNetwork.Extentions
             user.Status = model.Status;
             user.Image = model.Image;
             user.BirthDate = model.BirthDate;
+        }
+
+        public static int GetIntAge(this User user)
+        {
+            return DateTime.Now.Year - user.BirthDate.Year;
+        }
+
+        public static string GetStrAge(this User user)
+        {
+            var age = user.GetIntAge();
+            var modulo = age % 10;
+
+            Dictionary<int, string> map = new();
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (i == 0 || i >= 5) map[i] = "лет";
+                else if (i == 1) map[i] = "год";
+                else map[i] = "года";
+            }
+
+            return $"{age} {map[modulo]}";
+        }
+
+        public static int GetBirthYearFromAge(this User user, int age)
+        {
+            return DateTime.Now.Year - age;
         }
     }
 }
