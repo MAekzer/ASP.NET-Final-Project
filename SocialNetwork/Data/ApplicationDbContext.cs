@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SocialNetwork.Models.Users;
+﻿using SocialNetwork.Models.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Configuration;
-
 namespace SocialNetwork.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
@@ -13,6 +8,7 @@ namespace SocialNetwork.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -29,6 +25,11 @@ namespace SocialNetwork.Data
             modelBuilder.Entity<Friend>().Property(x => x.Id).UseIdentityColumn();
             modelBuilder.Entity<Friend>().HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Friend>().HasOne(x => x.CurrentFriend).WithMany().OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Message>().ToTable("Messages").HasKey(p => p.Id);
+            modelBuilder.Entity<Message>().Property(x => x.Id).UseIdentityColumn();
+            modelBuilder.Entity<Message>().HasOne(x => x.Sender).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Message>().HasOne(x => x.Recipient).WithMany().OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

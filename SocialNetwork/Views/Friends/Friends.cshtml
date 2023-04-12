@@ -1,0 +1,44 @@
+﻿@using Extentions
+@model ViewModels.Account.FriendsViewModel
+@{
+    ViewData["Title"] = "Friends";
+}
+
+<div class="search-container">
+    @if (Model is null || Model.Friends is null || Model.Friends.Count == 0)
+    {
+        <h1 class="not-found">Похоже, у вас пока нет друзей</h1>
+        <p class="not-found"> Не расстраивайтесь - вы всегда можете найти новых друзей, перейдя по кнопке "Поиск"</p>
+    }
+    else
+    {
+        <ul class="search-result">
+            @foreach (var user in Model.Friends)
+            {
+                <div class="search-container">
+                    <ul class="search-result">
+                        <li>
+                            <figure class="search-img-container">
+                                <img class="search-profile-img" src="https://via.placeholder.com/500">
+                                <figcaption>
+                                    <form asp-controller="Friends" method="post" asp-action="Chat" asp-route-id="@user.Id">
+                                        <button type="submit" class="add-friend-btn">Написать сообщение</button>
+                                    </form>
+                                    <form asp-controller="Friends" method="post" asp-action="DeleteFriend" asp-route-id="@user.Id">
+                                        <button type="submit" class="add-friend-btn">Удалить из друзей</button>
+                                    </form>
+                                </figcaption>
+                            </figure>
+                            <div class="search-info-container">
+                                <p class="search-name">@user.GetFullName()</p>
+                                <p><span>Дата рождения:</span> <span class="search-info">@user.BirthDate.ToLongDateString()</span></p>
+                                <p><span>Возраст:</span> <span class="search-info">@user.GetStrAge()</span></p>
+                                <p><span>Статус:</span> <span class="search-info"></span>@user.Status</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </ul>
+    }
+</div>
