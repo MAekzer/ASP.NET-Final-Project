@@ -29,8 +29,9 @@ namespace SocialNetwork.Controllers.Account
         }
 
         [Authorize]
+        [Route("DeleteFriend")]
         [HttpPost]
-        public async Task<IActionResult> DeleteFriend([FromRoute] string id)
+        public async Task<IActionResult> DeleteFriend(string id)
         {
             var repo = _unitOfWork.GetRepository<Friend>() as FriendRepository;
 
@@ -40,31 +41,27 @@ namespace SocialNetwork.Controllers.Account
             if (friend is not null)
             {
                 await repo.DeleteFriend(user, friend);
-                return StatusCode(200);
             }
 
-            return StatusCode(400);
+            return RedirectToAction("MyPage", "AccountManager");
         }
 
         [Authorize]
+        [Route("AddFriend")]
         [HttpPost]
-        public async Task<IActionResult> AddFriend([FromRoute] string id)
+        public async Task<IActionResult> AddFriend(string id)
         {
             var repo = _unitOfWork.GetRepository<Friend>() as FriendRepository;
 
             var user = await _userManager.GetUserAsync(User);
             var friend = await _userManager.FindByIdAsync(id);
-            Console.WriteLine($"Request: {id}, {friend.FirstName}, {friend.LastName}");
 
             if (friend is not null)
             {
                 await repo.AddFriend(user, friend);
-                return StatusCode(200);
             }
 
-            Console.WriteLine("foo");
-
-            return StatusCode(400);
+            return RedirectToAction("MyPage", "AccountManager");
         }
 
         [Authorize]
@@ -73,12 +70,6 @@ namespace SocialNetwork.Controllers.Account
         public async Task<IActionResult> Search(SearchViewModel model)
         {
             model ??= new SearchViewModel();
-
-            var repo = _unitOfWork.GetRepository<Friend>() as FriendRepository;
-            var user = await _userManager.GetUserAsync(User);
-
-            var friends = await repo.GetFriendsByUser(user);
-            model.Friends = friends;
 
             return View("UserSearch", model);
         }
@@ -89,6 +80,11 @@ namespace SocialNetwork.Controllers.Account
         public async Task<IActionResult> SearchResult(SearchViewModel model)
         {
             User user;
+            var repo = _unitOfWork.GetRepository<Friend>() as FriendRepository;
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var friends = await repo.GetFriendsByUser(currentUser);
+            model.Friends = friends;
 
             if (!ModelState.IsValid)
             {

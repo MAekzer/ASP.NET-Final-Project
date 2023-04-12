@@ -38,10 +38,11 @@
                     foreach (var friend in Model.Friends)
                     {
                         <figure class="friend-image-container">
+                            <figcaption class="friend-name">@friend.FirstName @friend.LastName</figcaption>
                             <img src="@Model.User.Image"/>
                             <figcaption>
                                 <form asp-controller="Friends" method="post" asp-action="DeleteFriend" asp-route-id="@friend.Id">
-                                    <button type="submit" class="add-friend-btn">Удалить из друзей</button>
+                                    <button type="submit" class="delete-friend-btn">Удалить</button>
                                 </form>
                             </figcaption>
                         </figure>
@@ -54,3 +55,4 @@
             <span>Найти больше друзей</span>
         </a>
     </div>
+</div>
