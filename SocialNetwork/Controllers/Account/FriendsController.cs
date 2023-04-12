@@ -29,6 +29,23 @@ namespace SocialNetwork.Controllers.Account
         }
 
         [Authorize]
+        [Route("MyFriends")]
+        [HttpGet]
+        public async Task<IActionResult> MyFriends()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var repo = _unitOfWork.GetRepository<Friend>() as FriendRepository;
+
+            var friends = await repo.GetFriendsByUser(user);
+            FriendsViewModel model = new()
+            {
+                Friends = friends,
+            };
+
+            return View("Friends", model);
+        }
+
+        [Authorize]
         [Route("DeleteFriend")]
         [HttpPost]
         public async Task<IActionResult> DeleteFriend(string id)

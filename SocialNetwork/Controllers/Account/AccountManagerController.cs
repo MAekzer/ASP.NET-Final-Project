@@ -28,20 +28,6 @@ namespace SocialNetwork.Controllers.Account
             _unitOfWork = unitOfWork;
         }
 
-
-        [Route("Login")]
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View("Login");
-        }
-
-        [HttpGet]
-        public IActionResult Login(string returnUrl = null)
-        {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
-        }
-
         [Route("Login")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -58,7 +44,7 @@ namespace SocialNetwork.Controllers.Account
                     if (user == null)
                     {
                         ModelState.AddModelError("", "Неверный адрес электронной почты или пароль");
-                        return View("/Views/Home/Index.cshtml", model);
+                        return View("/Views/Home/Index.cshtml");
                     }
                     else
                     {
@@ -68,7 +54,7 @@ namespace SocialNetwork.Controllers.Account
                 else if (username.Contains('@'))
                 {
                     ModelState.AddModelError("", "Некорректный формат адреса электронной почты");
-                    return View("/Views/Home/Index.cshtml", model);
+                    return View("/Views/Home/Index.cshtml");
                 }
 
                 var result = await _signInManager.PasswordSignInAsync(username, model.Password, model.RememberMe, false);

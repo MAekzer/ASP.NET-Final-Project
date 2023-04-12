@@ -34,7 +34,10 @@ namespace SocialNetwork.Data.Repository
         {
             var friends = Set.Include(x => x.CurrentFriend).AsQueryable().Where(x => x.User.Id == target.Id).Select(x => x.CurrentFriend);
 
-            return await friends.ToListAsync();
+            if (friends is null)
+                return new List<User>();
+            else
+                return await friends.ToListAsync();
         }
 
         public async Task DeleteFriend(User target, User Friend)
