@@ -13,7 +13,7 @@ namespace SocialNetwork.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.Migrate();
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,7 +25,10 @@ namespace SocialNetwork.Data
                 b.HasIndex(u => u.NormalizedEmail).IsUnique();
             });
 
-            modelBuilder.ApplyConfiguration(new FriendConfiguration());
+            modelBuilder.Entity<Friend>().ToTable("Friends").HasKey(p => p.Id);
+            modelBuilder.Entity<Friend>().Property(x => x.Id).UseIdentityColumn();
+            modelBuilder.Entity<Friend>().HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Friend>().HasOne(x => x.CurrentFriend).WithMany().OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

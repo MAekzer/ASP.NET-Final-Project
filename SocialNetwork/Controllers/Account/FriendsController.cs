@@ -29,17 +29,17 @@ namespace SocialNetwork.Controllers.Account
         }
 
         [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> DeleteFriend(string friendId)
+        [HttpPost]
+        public async Task<IActionResult> DeleteFriend([FromRoute] string id)
         {
             var repo = _unitOfWork.GetRepository<Friend>() as FriendRepository;
 
             var user = await _userManager.GetUserAsync(User);
-            var friend = await _userManager.FindByIdAsync(friendId);
+            var friend = await _userManager.FindByIdAsync(id);
 
             if (friend is not null)
             {
-                await repo.AddFriend(user, friend);
+                await repo.DeleteFriend(user, friend);
                 return StatusCode(200);
             }
 
@@ -47,19 +47,22 @@ namespace SocialNetwork.Controllers.Account
         }
 
         [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> AddFriend(string friendId)
+        [HttpPost]
+        public async Task<IActionResult> AddFriend([FromRoute] string id)
         {
             var repo = _unitOfWork.GetRepository<Friend>() as FriendRepository;
 
             var user = await _userManager.GetUserAsync(User);
-            var friend = await _userManager.FindByIdAsync(friendId);
+            var friend = await _userManager.FindByIdAsync(id);
+            Console.WriteLine($"Request: {id}, {friend.FirstName}, {friend.LastName}");
 
             if (friend is not null)
             {
                 await repo.AddFriend(user, friend);
                 return StatusCode(200);
             }
+
+            Console.WriteLine("foo");
 
             return StatusCode(400);
         }

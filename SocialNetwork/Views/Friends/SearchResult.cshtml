@@ -21,15 +21,15 @@
                         <figcaption>
                             @if (Model.Friends.Contains(user))
                             {
-                                <button class="add-friend-btn" type="button" onclick="location.href='@Url.Action("DeleteFriend", "Friends", user.Id)'">
-                                    Удалить из друзей
-                                </button>
+                                <form asp-controller="Friends" method="post" asp-action="DeleteFriend" asp-route-id="@user.Id">
+                                    <button type="submit" class="add-friend-btn">Удалить из друзей</button>
+                                </form>
                             }
                             else
                             {
-                                <button class="add-friend-btn" type="button" onclick="location.href='@Url.Action("DeleteFriend", "Friends", user.Id)'">
-                                    Добавить в друзья
-                                </button>
+                                <form asp-controller="Friends" method="post" asp-action="AddFriend" asp-route-id="@user.Id">
+                                    <button type="submit" class="add-friend-btn">Добавить в друзья</button>
+                                </form>
                             }
                         </figcaption>
                     </figure>

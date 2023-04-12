@@ -40,9 +40,9 @@
                         <figure class="friend-image-container">
                             <img src="@Model.User.Image"/>
                             <figcaption>
-                                <button type="button" class="delete-friend-btn" onclick="location.href='@Url.Action("DeleteFriend", "Friends", friend.Id)'">
-                                    Удалить
-                                </button>
+                                <form asp-controller="Friends" method="post" asp-action="DeleteFriend" asp-route-id="@friend.Id">
+                                    <button type="submit" class="add-friend-btn">Удалить из друзей</button>
+                                </form>
                             </figcaption>
                         </figure>
                     }

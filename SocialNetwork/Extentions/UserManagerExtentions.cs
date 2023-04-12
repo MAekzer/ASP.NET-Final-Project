@@ -11,11 +11,6 @@ namespace SocialNetwork.Extentions
         {
             var map = User.GetNameFromFullName(fullName);
 
-            foreach (var pair in map)
-            {
-                Console.WriteLine($"{pair.Key} - {pair.Value}");
-            }
-
             IQueryable<User> query;
 
             if (map.Count == 0)

@@ -58,7 +58,7 @@ namespace SocialNetwork.Controllers.Account
                     if (user == null)
                     {
                         ModelState.AddModelError("", "Неверный адрес электронной почты или пароль");
-                        return View("Home/Index", model);
+                        return View("/Views/Home/Index.cshtml", model);
                     }
                     else
                     {
@@ -68,13 +68,17 @@ namespace SocialNetwork.Controllers.Account
                 else if (username.Contains('@'))
                 {
                     ModelState.AddModelError("", "Некорректный формат адреса электронной почты");
-                    return View("Home/Index", model);
+                    return View("/Views/Home/Index.cshtml", model);
                 }
 
                 var result = await _signInManager.PasswordSignInAsync(username, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("MyPage", "AccountManager");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неверный логин или пароль");
                 }
             }
             return View("/Views/Home/Index.cshtml");
