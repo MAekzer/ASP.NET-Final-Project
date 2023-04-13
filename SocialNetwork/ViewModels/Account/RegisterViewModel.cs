@@ -22,7 +22,7 @@ namespace SocialNetwork.ViewModels.Account
 
         [DataType(DataType.Text)]
         [Display(Name = "Отчество", Prompt = "Введите отчество при наличии")]
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         [Required(ErrorMessage = "Поле Email обязательно для заполнения")]
         [EmailAddress]

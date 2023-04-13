@@ -1,68 +1,52 @@
-﻿@model ViewModels.Account.ChatViewModel
+﻿@using Extentions
+@model ViewModels.Account.ChatViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Chat";
 }
 
-<h3>Диалог с пользователем Михаил Алексеевич Гуторов</h3>
+<h3>Диалог с пользователем @Model.Other.GetFullName()</h3>
 <div class="message-list">
-    <div class="message-container self">
-        <div>
-            <p class="date">02.12.2000</p>
-            <p class="date">15:30</p>
-        </div>
-        <img class="chat-img" src="https://via.placeholder.com/500" />
-        <p class="message">Hello there!</p>
-    </div>
-    <div class="message-container other">
-        <div>
-            <p class="date">02.12.2000</p>
-            <p class="date">15:30</p>
-        </div>
-        <img class="chat-img" src="https://via.placeholder.com/500" />
-        <p class="message">General Kennobi</p>
-    </div>
-    <div class="message-container self">
-        <div>
-            <p class="date">02.12.2000</p>
-            <p class="date">15:30</p>
-        </div>
-        <img class="chat-img" src="https://via.placeholder.com/500" />
-        <p class="message">
-            This is a really long message about my project.
-            It has so many cool features - looking at your own ugly face on the main page,
-            looking at empty friend list because obviusly noone likes you, sending messages to
-            imaginary users. Thats so cool and original, you should definitely try it out,
-            and also by the way it costs only $1000. Thats so cheap lol you would be a fool
-            rejecting this offer. This is a really long message about my project.
-            It has so many cool features - looking at your own ugly face on the main page,
-            looking at empty friend list because obviusly noone likes you, sending messages to
-            imaginary users. Thats so cool and original, you should definitely try it out,
-            and also by the way it costs only $1000. Thats so cheap lol you would be a fool
-            rejecting this offer. This is a really long message about my project.
-            It has so many cool features - looking at your own ugly face on the main page,
-            looking at empty friend list because obviusly noone likes you, sending messages to
-            imaginary users. Thats so cool and original, you should definitely try it out,
-            and also by the way it costs only $1000. Thats so cheap lol you would be a fool
-            rejecting this offer.
-        </p>
-    </div>
-    <div class="message-container other">
-        <div>
-            <p class="date">02.12.2000</p>
-            <p class="date">15:30</p>
-        </div>
-        <img class="chat-img" src="https://via.placeholder.com/500" />
-        <p class="message">bruh</p>
-    </div>
+    @foreach(var message in Model.Messages)
+    {
+        @if (message.Sender == Model.Current)
+        {
+            <div class="message-container self">
+                <div>
+                    <p class="date">@message.Time.ToShortDateString()</p>
+                    <p class="date">@message.Time.ToString("HH:mm")</p>
+                </div>
+                <img class="chat-img" src="@Model.Current.Image" />
+                <p class="message">@message.Text</p>
+            </div>
+        }
+        else if (message.Sender == Model.Other)
+        {
+            <div class="message-container other">
+                <div>
+                    <p class="date">@message.Time.ToShortDateString()</p>
+                    <p class="date">@message.Time.ToString("HH:mm")</p>
+                </div>
+                <img class="chat-img" src="@Model.Other.Image" />
+                <p class="message">@message.Text</p>
+            </div>
+        }
+
+    }
 </div>
 <div class="chat-prompt">
-    <form>
+    <form asp-controller="Messages" method="post" asp-action="SendMessage" asp-route-id="@Model.Other.Id">
         <span class="message-prompt">Ваше сообщение:</span>
         <div>
-            <textarea class="message-inp" placeholder="Наберите текст сообщения"></textarea>
+            <textarea class="message-inp" asp-for="NewMessage" placeholder="Наберите текст сообщения"></textarea>
             <button class="send-btn">Отправить</button>
         </div>
     </form>
 </div>
+
+<script>
+    let el = document.getElementsByClassName("message-list")
+    el.scrollTo(0, el.scrollHeight);
+</script>

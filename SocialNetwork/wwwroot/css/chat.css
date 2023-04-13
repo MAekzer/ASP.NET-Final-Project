@@ -4,7 +4,7 @@
 
 h3 {
     text-align: center;
-    margin-bottom: 40px;
+    margin: 20px 0 20px;
 }
 
 .chat-img {
@@ -16,31 +16,34 @@ h3 {
 
 .message-list {
     width: 100%;
-    height: 100%;
-    margin: 0 100px 0 0;
+    height: 640px;
+    margin: 0 150px 0 0;
     padding: 30px 0;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 10px;
+    overflow-y: scroll;
 }
 
 .message-container {
     background-color: #eeeeee;
-    min-height: 70px;
     width: 100%;
     margin: 0 auto;
     padding: 15px 5px;
     display: flex;
     justify-content: flex-start;
+    text-align: left
+}
+
+.message-container:last-of-type {
+    margin-bottom: 50px;
 }
 
 .self {
     flex-direction: row;
-    text-align: left;
 }
 
 .other {
-    text-align: right;
     flex-direction: row-reverse;
 }
 
@@ -49,7 +52,6 @@ h3 {
     padding: 5px 10px;
     white-space: normal;
     margin: auto 15px;
-    ;
     font-size: 1.1em;
     vertical-align: middle;
     border: 1px solid black;
@@ -65,8 +67,11 @@ h3 {
 }
 
 .chat-prompt {
+    border-top: 3px solid black;
+    border-radius: 15px;
+    margin-top: 50px;
     position: absolute;
-    background-color: Lavender;
+    background-color: #eeeeee;
     bottom: 0;
     left: 0;
     height: 150px;

@@ -37,7 +37,7 @@ namespace SocialNetwork.Data.Repository
             if (friends is null)
                 return new List<User>();
             else
-                return await friends.ToListAsync();
+               return await friends.ToListAsync();
         }
 
         public async Task DeleteFriend(User target, User Friend)

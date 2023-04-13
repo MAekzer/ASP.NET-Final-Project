@@ -8,23 +8,18 @@ using SocialNetwork.Data.UoW;
 using SocialNetwork.Extentions;
 using SocialNetwork.Models.Users;
 using SocialNetwork.ViewModels.Account;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SocialNetwork.Controllers.Account
 {
     public class FriendsController : Controller
     {
-        private IMapper _mapper;
-
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-
         private readonly IUnitOfWork _unitOfWork;
 
-        public FriendsController(IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager, IUnitOfWork unitOfWork)
+        public FriendsController(IMapper mapper, UserManager<User> userManager, IUnitOfWork unitOfWork)
         {
-            _mapper = mapper;
             _userManager = userManager;
-            _signInManager = signInManager;
             _unitOfWork = unitOfWork;
         }
 

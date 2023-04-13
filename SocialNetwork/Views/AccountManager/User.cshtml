@@ -41,8 +41,8 @@
                             <figcaption class="friend-name">@friend.FirstName @friend.LastName</figcaption>
                             <img src="@Model.User.Image"/>
                             <figcaption>
-                                <form asp-controller="Friends" method="post" asp-action="DeleteFriend" asp-route-id="@friend.Id">
-                                    <button type="submit" class="delete-friend-btn">Удалить</button>
+                                <form asp-controller="Messages" method="post" asp-action="Chat" asp-route-id="@friend.Id">
+                                    <button type="submit" class="delete-friend-btn">Сообщения</button>
                                 </form>
                             </figcaption>
                         </figure>

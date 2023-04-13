@@ -30,7 +30,7 @@ namespace SocialNetwork
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionstring));
             builder.Services.AddUnitOfWork();
-            builder.Services.AddCustomRepository<Message, MessageRepository>();
+            builder.Services.AddCustomRepository<Message, MessagesRepository>();
             builder.Services.AddCustomRepository<Friend, FriendRepository>();
 
             builder.Services.AddRazorPages();
